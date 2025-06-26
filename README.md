@@ -34,7 +34,7 @@ This is a hands-on lab—not a polished product. Expect rapid prototyping, imper
 
 ## 📦 Repo Structure
 
-
+```
 /
 ├── agents/ # Full agents with defined loops and modular construction
 ├── modules/ # Pluggable logic: planners, memory, perception, etc.
@@ -46,7 +46,7 @@ This is a hands-on lab—not a polished product. Expect rapid prototyping, imper
 ├── utils/ # Shared utilities and support code
 ├── README.md # Project overview
 └── CONTRIBUTING.md # How to contribute
-
+```
 
 ---
 
