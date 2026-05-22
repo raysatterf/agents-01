@@ -106,13 +106,15 @@ class BuildDocPdfsTests(unittest.TestCase):
             temp_path = Path(temp_dir)
             docs_root = temp_path / "docs"
             output_root = temp_path / "output-pdf"
+            empty_bin = temp_path / "empty-bin"
+            empty_bin.mkdir()
             docs_root.mkdir()
             (docs_root / "readme.md").write_text("# Root\n", encoding="utf-8")
 
             result = subprocess.run(
                 [sys.executable, str(CLI_PATH), "--docs-root", str(docs_root), "--output-root", str(output_root)],
                 cwd=REPO_ROOT,
-                env=self._build_env(None),
+                env=self._build_env(empty_bin, include_system_path=False),
                 text=True,
                 capture_output=True,
                 check=False,
@@ -146,9 +148,12 @@ class BuildDocPdfsTests(unittest.TestCase):
         )
         path.chmod(path.stat().st_mode | stat.S_IEXEC)
 
-    def _build_env(self, fake_bin: Path | None) -> dict[str, str]:
+    def _build_env(self, fake_bin: Path | None, include_system_path: bool = True) -> dict[str, str]:
         env = os.environ.copy()
-        env["PATH"] = f"{fake_bin}{os.pathsep}{env['PATH']}" if fake_bin else ""
+        path_parts = [str(fake_bin)] if fake_bin else []
+        if include_system_path or not path_parts:
+            path_parts.append(env["PATH"])
+        env["PATH"] = os.pathsep.join(path_parts)
         return env
 
 
