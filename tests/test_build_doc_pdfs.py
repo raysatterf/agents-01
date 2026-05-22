@@ -46,6 +46,15 @@ class BuildDocPdfsTests(unittest.TestCase):
         output = build_doc_pdfs.resolve_output_pdf(Path("/tmp/out"), docs_dir, group)
         self.assertEqual(output, Path("/tmp/out/get visualcron.pdf"))
 
+    def test_resolve_output_pdf_handles_nested_groups(self):
+        docs_dir = Path("/tmp/docs")
+        group = build_doc_pdfs.Group(
+            folder=Path("/tmp/docs/client-user-interface/toolbar"),
+            files=[Path("/tmp/docs/client-user-interface/toolbar/add-job.md")],
+        )
+        output = build_doc_pdfs.resolve_output_pdf(Path("/tmp/out"), docs_dir, group)
+        self.assertEqual(output, Path("/tmp/out/client-user-interface/toolbar.pdf"))
+
     def test_render_pdf_tries_detected_backends_then_fallback(self):
         markdown_path = Path("/tmp/input.md")
         output_pdf = Path("/tmp/output.pdf")

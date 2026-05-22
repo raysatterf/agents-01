@@ -130,7 +130,7 @@ def resolve_output_pdf(output_dir: Path, docs_dir: Path, group: Group) -> Path:
     relative_folder = group.folder.relative_to(docs_dir)
     if str(relative_folder) == ".":
         return output_dir / "docs.pdf"
-    return output_dir / relative_folder.with_suffix(".pdf")
+    return output_dir / relative_folder.parent / f"{relative_folder.name}.pdf"
 
 
 def available_engines() -> List[str]:
