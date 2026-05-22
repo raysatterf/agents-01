@@ -249,7 +249,11 @@ def build_docs(docs_root: Path, output_root: Path, manifest_path: Path) -> int:
         manifest["groups"].append(group_record)
 
         if backend is None:
-            error = "No supported local PDF backend was found. Install pandoc (plus wkhtmltopdf, xelatex, or pdflatex if needed)."
+            error = (
+                "No supported local PDF backend was found. Install pandoc "
+                "(plus wkhtmltopdf, xelatex, or pdflatex if needed) and see "
+                "README.md: 'Build grouped documentation PDFs' for setup details."
+            )
             group_record["status"] = "failed"
             group_record["error"] = error
             manifest["failures"].append(f"{group_label(group.relative_dir)}: {error}")

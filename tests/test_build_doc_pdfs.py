@@ -59,7 +59,7 @@ class BuildDocPdfsTests(unittest.TestCase):
             output_root = temp_path / "output-pdf"
             fake_bin = temp_path / "bin"
             fake_bin.mkdir()
-            self._write_fake_pandoc(fake_bin / "pandoc")
+            self._create_fake_pandoc_executable(fake_bin / "pandoc")
 
             (docs_root / "commands").mkdir(parents=True)
             (docs_root / "get visualcron").mkdir(parents=True)
@@ -129,7 +129,7 @@ class BuildDocPdfsTests(unittest.TestCase):
             self.assertTrue(manifest["failures"])
             self.assertTrue((output_root / "merged-markdown" / "docs-root.md").exists())
 
-    def _write_fake_pandoc(self, path: Path) -> None:
+    def _create_fake_pandoc_executable(self, path: Path) -> None:
         path.write_text(
             textwrap.dedent(
                 f"""\
