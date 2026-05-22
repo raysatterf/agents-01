@@ -13,7 +13,7 @@ from pathlib import Path
 from scripts import build_doc_pdfs
 
 
-REPO_ROOT = Path("/home/runner/work/agents-01/agents-01")
+REPO_ROOT = Path(__file__).resolve().parent.parent
 CLI_PATH = REPO_ROOT / "scripts" / "build-doc-pdfs.py"
 
 
@@ -130,7 +130,7 @@ class BuildDocPdfsTests(unittest.TestCase):
     def _write_fake_pandoc(self, path: Path) -> None:
         path.write_text(
             textwrap.dedent(
-                """\
+                f"""\
                 #!{sys.executable}
                 import pathlib
                 import sys
@@ -141,7 +141,7 @@ class BuildDocPdfsTests(unittest.TestCase):
                 output_path.parent.mkdir(parents=True, exist_ok=True)
                 output_path.write_text("PDF\\n" + input_path.read_text(encoding="utf-8"), encoding="utf-8")
                 """
-            ).format(sys=sys),
+            ),
             encoding="utf-8",
         )
         path.chmod(path.stat().st_mode | stat.S_IEXEC)
