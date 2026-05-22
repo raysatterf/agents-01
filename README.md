@@ -96,6 +96,49 @@ This is a hands-on lab—not a polished product. Expect rapid prototyping, imper
 
 ---
 
+## 📄 Build grouped PDFs from VisualCron docs
+
+This repository includes an isolated script that can clone or consume
+[`smatechnologies/visualcron-docs`](https://github.com/smatechnologies/visualcron-docs/)
+and generate grouped PDFs from its `docs/` folder:
+
+- Script: `scripts/build_doc_pdfs.py`
+- Grouping: one PDF per folder using only the folder's immediate `.md` files
+- Nested folders: treated as separate groups
+- Order within a group: `index.md`, `readme.md`, then natural/alphabetical
+- Output: `output/pdfs/` plus manifest `output/pdfs/manifest.json`
+
+### Requirements
+
+- Python 3
+- `pandoc`
+- At least one local PDF engine for pandoc (`typst`, `weasyprint`, `wkhtmltopdf`,
+  `xelatex`, `lualatex`, or `pdflatex`)
+
+### Usage
+
+Use an existing local checkout (offline-friendly):
+
+```bash
+python scripts/build_doc_pdfs.py --source-path /absolute/path/to/visualcron-docs
+```
+
+Or let the script clone the docs repository into this repo:
+
+```bash
+python scripts/build_doc_pdfs.py
+```
+
+Optional update of existing checkout:
+
+```bash
+python scripts/build_doc_pdfs.py --update
+```
+
+The script fails with clear guidance when required local tools are missing.
+
+---
+
 ## 🤝 Contributing
 
 We welcome contributors of all skill levels and backgrounds. Whether you're optimizing a planner, testing a new memory schema, or just documenting a test—your input matters.
