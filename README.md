@@ -104,7 +104,87 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md) for guidelines.
 
 ---
 
+## 📄 VisualCron Docs → PDF Generation
+
+A local offline script (`scripts/build_doc_pdfs.py`) converts a folder of
+Markdown documentation files into grouped PDFs — one PDF per folder in the
+docs tree.
+
+### Prerequisites
+
+You need **one** of the following PDF tools installed locally:
+
+| Tool | Install |
+|------|---------|
+| **pandoc** *(recommended)* | https://pandoc.org/installing.html |
+| wkhtmltopdf *(pandoc engine)* | https://wkhtmltopdf.org/downloads.html |
+| xelatex / pdflatex *(pandoc engine)* | Install a TeX distribution (e.g. MiKTeX, TeX Live) |
+| Google Chrome or Chromium *(fallback)* | Already installed on most systems |
+| Microsoft Edge *(fallback)* | Already installed on Windows |
+
+No internet access is required at runtime — the script uses only your
+locally installed tools and standard Python libraries (Python 3.7+).
+
+### Quick start
+
+```bash
+# 1. Clone or download the docs repo you want to convert, e.g.:
+#    git clone https://github.com/smatechnologies/visualcron-docs.git
+
+# 2. From the root of *this* repo, run:
+python scripts/build_doc_pdfs.py --source-path /path/to/visualcron-docs/docs
+
+# 3. PDFs are written to output-pdf/  (one per folder group)
+#    A summary report is written to output-pdf/build-report.json
+```
+
+### Options
+
+```
+--source-path PATH   (required) Root directory containing .md files
+--output-path PATH   Where to write PDFs (default: output-pdf/)
+--config FILE        JSON config file (default: scripts/config.json if present)
+--dry-run            Scan and list groups without generating any PDFs
+```
+
+### Dry run (no PDF tool required)
+
+```bash
+python scripts/build_doc_pdfs.py --source-path /path/to/docs --dry-run
+```
+
+This prints the discovered folder groups and file counts without invoking
+any external converter — useful for previewing how the docs will be grouped.
+
+### Grouping logic
+
+- Each folder that contains `.md` files directly becomes **one PDF**.
+- Nested sub-folders each become their own separate PDF.
+- `index.md` / `readme.md` are sorted to the top of each PDF; all other
+  files are sorted alphabetically (numeric prefixes sorted numerically).
+- Relative image references are automatically rewritten to absolute paths so
+  images are embedded correctly regardless of where the temp file is created.
+
+### Output naming
+
+| Source folder | Output PDF |
+|---------------|------------|
+| `docs/commands/` | `output-pdf/commands.pdf` |
+| `docs/client-user-interface/` | `output-pdf/client-user-interface.pdf` |
+| `docs/client-user-interface/toolbar/` | `output-pdf/client-user-interface--toolbar.pdf` |
+| `docs/` *(root-level .md files)* | `output-pdf/documentation.pdf` |
+
+### Running the tests
+
+```bash
+python -m unittest discover -v
+```
+
+All 38 unit tests run without any external dependencies.
+
+---
+
 ## 📌 Final Notes
 
 This repository is about pushing agent intelligence forward.  
-It’s about learning how to make systems that adapt, observe, plan, and act. 
+It's about learning how to make systems that adapt, observe, plan, and act. 
