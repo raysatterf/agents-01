@@ -1,0 +1,4 @@
+# Generated PDFs are written here.
+# This directory is intentionally kept in version control so the folder
+# structure exists when you clone the repository.
+# Actual .pdf and build-report.json files are ignored via .gitignore.

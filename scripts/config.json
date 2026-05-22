@@ -1,0 +1,17 @@
+{
+  "docs_root": "docs",
+  "output_root": "output-pdf",
+  "grouping": "per-folder-direct-files",
+  "merge_single_file_folders": true,
+  "file_order": ["index.md", "readme.md"],
+  "ignore_dirs": [".git", ".github", "node_modules", "__pycache__"],
+  "ignore_files": [],
+  "pdf_backend_preference": [
+    "pandoc-wkhtmltopdf",
+    "pandoc-xelatex",
+    "pandoc-pdflatex",
+    "pandoc",
+    "html-edge",
+    "html-chrome"
+  ]
+}
