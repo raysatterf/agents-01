@@ -205,10 +205,10 @@ def build_docs(docs_root: Path, output_root: Path, manifest_path: Path) -> int:
     output_root.mkdir(parents=True, exist_ok=True)
     groups = discover_groups(docs_root) if docs_root.exists() else []
     backend, backend_probes = probe_backend()
-    timestamp = datetime.now(timezone.utc).isoformat()
+    utc_timestamp = datetime.now(timezone.utc).isoformat()
 
     manifest: dict[str, object] = {
-        "generated_at": timestamp,
+        "generated_at": utc_timestamp,
         "docs_root": str(docs_root),
         "output_root": str(output_root),
         "manifest_path": str(manifest_path),
