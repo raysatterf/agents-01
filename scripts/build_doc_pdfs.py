@@ -217,7 +217,7 @@ def main() -> int:
             branch=args.branch,
             update=args.update,
         )
-    except Exception as exc:  # pragma: no cover - CLI entry handling
+    except (FileNotFoundError, RuntimeError) as exc:  # pragma: no cover - CLI entry handling
         print(str(exc), file=sys.stderr)
         return 2
 
@@ -243,7 +243,7 @@ def main() -> int:
             output_pdf = resolve_output_pdf(args.output_dir, docs_dir, group)
             try:
                 backend = render_pdf_with_pandoc(merged_path, output_pdf)
-            except Exception as exc:
+            except RuntimeError as exc:
                 print(f"Failed generating {output_pdf}: {exc}", file=sys.stderr)
                 return 1
 
